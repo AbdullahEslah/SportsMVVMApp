@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SportsCell" id="gTV-IL-0wX" customClass="SportsCell" customModule="SportsApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="188" height="220"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="188" height="220"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQH-dF-wqj">
+                        <rect key="frame" x="8" y="8" width="172" height="204"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ANi-Ig-6Gp">
+                            <rect key="frame" x="0.0" y="0.0" width="172" height="204"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sport Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5C-tg-cGS">
+                                    <rect key="frame" x="8" y="164" width="156" height="21"/>
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XBW-lT-COK" customClass="RoundedImageView" customModule="SportsApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="172" height="146"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="S5C-tg-cGS" secondAttribute="trailing" constant="8" id="4TH-4O-Kcz"/>
+                                <constraint firstItem="XBW-lT-COK" firstAttribute="leading" secondItem="ANi-Ig-6Gp" secondAttribute="leading" id="EsQ-aB-yDt"/>
+                                <constraint firstItem="S5C-tg-cGS" firstAttribute="top" secondItem="XBW-lT-COK" secondAttribute="bottom" constant="18" id="GgD-sV-Fsh"/>
+                                <constraint firstItem="XBW-lT-COK" firstAttribute="top" secondItem="ANi-Ig-6Gp" secondAttribute="top" id="bCP-Pe-M7e"/>
+                                <constraint firstAttribute="bottom" secondItem="S5C-tg-cGS" secondAttribute="bottom" constant="19" id="jJj-f4-rCD"/>
+                                <constraint firstItem="S5C-tg-cGS" firstAttribute="leading" secondItem="ANi-Ig-6Gp" secondAttribute="leading" constant="8" id="nzq-E8-BjF"/>
+                                <constraint firstAttribute="trailing" secondItem="XBW-lT-COK" secondAttribute="trailing" id="xaw-ma-Zyd"/>
+                            </constraints>
+                        </view>
+                        <blurEffect style="regular"/>
+                    </visualEffectView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="CQH-dF-wqj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="IvH-md-R7I"/>
+                <constraint firstAttribute="trailing" secondItem="CQH-dF-wqj" secondAttribute="trailing" constant="8" id="Tov-fZ-hRB"/>
+                <constraint firstAttribute="bottom" secondItem="CQH-dF-wqj" secondAttribute="bottom" constant="8" id="eLJ-gJ-jPe"/>
+                <constraint firstItem="CQH-dF-wqj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="ehR-40-R45"/>
+            </constraints>
+            <size key="customSize" width="188" height="220"/>
+            <connections>
+                <outlet property="sportImageView" destination="XBW-lT-COK" id="cLa-0w-EDO"/>
+                <outlet property="sportNameLabel" destination="S5C-tg-cGS" id="OpP-zL-9cR"/>
+            </connections>
+            <point key="canvasLocation" x="-157.97101449275362" y="118.52678571428571"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
