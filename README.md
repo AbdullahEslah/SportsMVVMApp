@@ -5,6 +5,7 @@ Featured Functionalities:
 -------------------------
 - Clean MVVM Design Pattern Ussing Closures
 - List The Data Of Each sport Details Using UICollectionView ComposotionalLayout
+- Save Your Favorite Sport League To Favorites Using CoreData
 
 
 Added New Functionalities :
