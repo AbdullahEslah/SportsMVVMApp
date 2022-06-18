@@ -22,6 +22,9 @@ class LeagueDetailsViewModel {
     var bindEventsPlaceholderToDetailsView: (() -> ()) = {}
     var bindTeamsPlaceholderToDetailsView : (() -> ()) = {}
     
+    // To Stop Animation If Failed To Load Data For Any Reason
+    var bindFailedToLoadData              : ( () -> () ) = {}
+    
     let conncetion = ConnectionManager.sharedInstance
     
     //Any Changes/action Happends In sportsArray call The Closure
@@ -34,7 +37,7 @@ class LeagueDetailsViewModel {
         }
     }
     
-    var teamsArray         : [Teams]?
+    var teamsArray          : [Teams]?
     {
         didSet{
             // Call The Closure Once SportResults changed instead of putting it down inside the func to observe the change here
@@ -46,18 +49,13 @@ class LeagueDetailsViewModel {
         NetworkManager.shared.getLeagueDetails(leageId: leagueId) { (events, error) in
             
                 if error == nil {
-                    
                     if events?.count == nil    {
                         self.bindEventsPlaceholderToDetailsView()
                     }else {
-                      
                         self.leagueDetailsArray = events
                     }
-                   
                 } else {
-                    guard let err = error else {return}
-                    
-                    Helper.displayMessage(message: err.localizedDescription, messageError: true)
+                    self.bindFailedToLoadData()
                 }
             }
     }
@@ -72,11 +70,8 @@ class LeagueDetailsViewModel {
                 } else {
                     self.teamsArray = teams
                 }
-                
-                    
                 } else {
-                    guard let err = error else {return}
-                    Helper.displayMessage(message: err.localizedDescription, messageError: true)
+                    self.bindFailedToLoadData()
                 }
             }
     }

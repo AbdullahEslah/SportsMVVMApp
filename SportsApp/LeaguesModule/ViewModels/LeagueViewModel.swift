@@ -11,12 +11,13 @@ import UIKit
 class LeagueViewModel {
     
     // To Connect View With ViewModel Using Closures For Network Call
-    var bindLeaguesToLeaguesView          : (() -> ()) = {}
+    var bindLeaguesToLeaguesView    : (() -> ()) = {}
     
     // To Connect View With ViewModel Using Closures For Connection
-    var bindConnectionToLeaguesView       : (() -> ()) = {}
+    var bindConnectionToLeaguesView : (() -> ()) = {}
     
-    
+    // To Stop Animation If Failed To Load Data For Any Reason
+    var bindFailedToLoadData        : ( () -> () ) = {}
     
     let conncetion = ConnectionManager.sharedInstance
     
@@ -39,8 +40,8 @@ class LeagueViewModel {
                   // print(countriesLeagues)
                 } else {
                     guard let err = error else {return}
-                    
-                    Helper.displayMessage(message: err.localizedDescription, messageError: true)
+                    print(err)
+                    self.bindFailedToLoadData()
                 }
             }
     }

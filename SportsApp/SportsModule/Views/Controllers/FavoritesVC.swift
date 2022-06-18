@@ -7,20 +7,19 @@
 
 import UIKit
 import Kingfisher
-import Reachability
 import Network
 
 class FavoritesVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
      
+    // Variables
     var viewModelInstance : SportsViewModel?
     
-    let conncetion = ConnectionManager.sharedInstance
-    
-    //Monitor Internet Connnection
+    // For Checking connection Befor Going To Details Of The League (Native Way)
     let monitor = NWPathMonitor()
     var reachbility : InternetConnection?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,41 +28,30 @@ class FavoritesVC: UIViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Helper.hudProgress()
         getFavLeagues()
-//        connected()
-        
-//        do {
-//            reachbility = try InternetConnection()
-//            try reachbility?.startNotifier()
-//        } catch let error{
-//            print(error)
-//        }
+
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-//        reachbility?.stopNotifier()
-//        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachbility)
-    }
-    
     
     func getFavLeagues() {
         // Get All Leagues
         ArraysManager.coreDataArray.removeAll()
         ArraysManager.coreDataArray = CoreDataManager.shared.fetchLeaguesData()
+        Helper.dismissHud()
         self.tableView.reloadData()
         if ArraysManager.coreDataArray.count == 0 {
+           
             self.tableView.isHidden = true
         }else {
+            
             self.tableView.isHidden = false
         }
     }
+    
     
     @objc func openURL(button:UIButton) {
         if ArraysManager.coreDataArray[button.tag].strYoutube == "" {
@@ -80,11 +68,6 @@ class FavoritesVC: UIViewController {
                 }
             }
         }
-    }
-    
-    func connected() {
- 
-        viewModelInstance?.internetConnection()
     }
     
 }
@@ -121,90 +104,36 @@ extension FavoritesVC :UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let storyboard            = UIStoryboard(name: "LeagueDetails", bundle: nil)
-        
-        guard let leagueDetailsVc = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsVC") as? LeagueDetailsVC else { return }
-        
-        viewModelInstance = SportsViewModel()
-        
-            
-            monitor.pathUpdateHandler = { path in
-                if path.status == .satisfied {
-                    
-                    DispatchQueue.main.async {
-                        
-                        
-                        print("We're connected!")
-                        
-                        Helper.displayMessage(message: "Found Internet Connection ✅", messageError: false)
-                        leagueDetailsVc.leagueIdParam  = ArraysManager.coreDataArray[indexPath.row].idLeague
-                        leagueDetailsVc.leagueNameParam = ArraysManager.coreDataArray[indexPath.row].strLeague
-                        
-                        leagueDetailsVc.modalPresentationStyle = .fullScreen
-                        
-                        self.present(leagueDetailsVc, animated: true)
-                    }
-                } else {
-                    print("No connection.")
-                    DispatchQueue.main.async {
-                        Helper.displayMessage(message: "No Internet Connection Cant Go TO Details Of This League ", messageError: true)
-                        
-                    }
-                    
-                }
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
                 
-                //To Check Whether This Class uses cellular data or Hotspot
-                print(path.isExpensive)
+                DispatchQueue.main.async {
+                    
+                    Helper.displayMessage(message: "Found Internet Connection ✅", messageError: false)
+                    let storyboard            = UIStoryboard(name: "LeagueDetails", bundle: nil)
+                    
+                    guard let leagueDetailsVc = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsVC") as? LeagueDetailsVC else { return }
+                    
+                    leagueDetailsVc.leagueIdParam  = ArraysManager.coreDataArray[indexPath.row].idLeague
+                    leagueDetailsVc.leagueNameParam = ArraysManager.coreDataArray[indexPath.row].strLeague
+                    
+                    leagueDetailsVc.modalPresentationStyle = .fullScreen
+                    
+                    self.present(leagueDetailsVc, animated: true)
+                }
+            } else {
+                
+                DispatchQueue.main.async {
+                    Helper.displayMessage(message: "No Internet Connection Cant Go TO Details Of This League ", messageError: true)
+                }
             }
-            
-            //Start Implementation of Checking The Internet Connection
-            let queue = DispatchQueue(label: "Monitor")
-            monitor.start(queue: queue)
-    
-      
+        }
         
-//        NotificationCenter.default.addObserver(forName: .reachabilityChanged, object: reachbility, queue: .main) { (notification) in
-//           if let myReachbility = notification.object as? InternetConnection {
-//               switch myReachbility.connection {
-//
-//               case .cellular:
-//                DispatchQueue.main.async {
-//                   print("connected to cellular data")
-//                   Helper.displayMessage(message: "connected to cellular data", messageError: false)
-//
-//                    Helper.displayMessage(message: "Found Internet Connection ✅", messageError: false)
-//                    leagueDetailsVc.leagueIdParam  = ArraysManager.coreDataArray[indexPath.row].idLeague
-//                    leagueDetailsVc.leagueNameParam = ArraysManager.coreDataArray[indexPath.row].strLeague
-//
-//                    leagueDetailsVc.modalPresentationStyle = .fullScreen
-//
-//                    self.present(leagueDetailsVc, animated: true)
-//                }
-//
-//               case .wifi:
-//                    DispatchQueue.main.async {
-//
-//                        Helper.displayMessage(message: "Found Internet Connection ✅", messageError: false)
-//                        leagueDetailsVc.leagueIdParam  = ArraysManager.coreDataArray[indexPath.row].idLeague
-//                        leagueDetailsVc.leagueNameParam = ArraysManager.coreDataArray[indexPath.row].strLeague
-//
-//                        leagueDetailsVc.modalPresentationStyle = .fullScreen
-//
-//                        self.present(leagueDetailsVc, animated: true)
-//                    }
-//
-//               case .unavailable:
-//                DispatchQueue.main.async {
-//                    Helper.displayMessage(message: "No Internet Connection Can't Go To Details Of That League", messageError: true)
-//                }
-//
-//               }
-//
-//           }
-//        }
+        //Start Implementation of Checking The Internet Connection
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
         
     }
-    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

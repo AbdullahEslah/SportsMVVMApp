@@ -1,5 +1,7 @@
 PODS:
   - Kingfisher (7.1.1)
+  - lottie-ios (3.2.3)
+  - ProgressHUD (13.6)
   - ReachabilitySwift (5.0.0)
   - SwiftMessages (9.0.6):
     - SwiftMessages/App (= 9.0.6)
@@ -7,20 +9,26 @@ PODS:
 
 DEPENDENCIES:
   - Kingfisher
+  - lottie-ios
+  - ProgressHUD
   - ReachabilitySwift
   - SwiftMessages
 
 SPEC REPOS:
   trunk:
     - Kingfisher
+    - lottie-ios
+    - ProgressHUD
     - ReachabilitySwift
     - SwiftMessages
 
 SPEC CHECKSUMS:
   Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
 
-PODFILE CHECKSUM: 8ca8cd421be59861bb9588fed386994b2d9fb26c
+PODFILE CHECKSUM: 06f56b5cce5fbd28a996036072f897d0b1f14f67
 
 COCOAPODS: 1.11.3

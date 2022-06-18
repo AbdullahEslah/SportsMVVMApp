@@ -12,13 +12,13 @@ class LeaguesVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    // Variables
+    // For Getting Data
     var leaguesArray      = [Countries]()
-    var reachbility       : Reachability?
     
     // Has instance from ViewModel to get logic/Func from it
     var viewModelInstance : LeagueViewModel?
-    let vc = NoConnectionVC()
+
+    // Received sportName Param From Previous Screen
     var sportNameParam = String()
     
     override func viewDidLoad() {
@@ -34,45 +34,30 @@ class LeaguesVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Helper.hudProgress()
         listLeaguesData()
-        reachbility = try! Reachability()
-      
-       
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        ConnectionManager.stopNotifier()
-        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachbility)
-        
-    }
-    
-    
     
     func listLeaguesData() {
-    
-        // Using bindSportsToSportsView Closure From The View Model To Load API Data From There
+        // Using bindSportsToSportsView Closure From The View Model To Make Action After Loading API
         viewModelInstance = LeagueViewModel()
-        
+        self.viewModelInstance?.listLeaguesData(sportName: sportNameParam)
         viewModelInstance?.bindLeaguesToLeaguesView = { [weak self] in
             DispatchQueue.main.async {
-                self?.tableView.isHidden = false
+                Helper.dismissHud()
+                self?.tableView.isHidden = false    
                 self?.leaguesArray = self?.viewModelInstance?.leaguesArray ?? []
-
                 self?.tableView.reloadData()
             }
         }
         
-        self.viewModelInstance?.listLeaguesData(sportName: sportNameParam)
-        
-        viewModelInstance?.bindConnectionToLeaguesView = { [weak self] in
-            DispatchQueue.main.async {
-                self?.present(self!.vc, animated: true, completion: nil)
-                self?.vc.modalPresentationStyle = .fullScreen
-                self?.vc.modalTransitionStyle   = .crossDissolve
-            }
+        // To Stop Animation If Failed To Load Data For Any Reason
+        viewModelInstance?.bindFailedToLoadData = {[weak self] in
+            Helper.dismissHud()
         }
-        self.viewModelInstance?.foundInternetConnection()
+        
+       
+        
     }
     
     @objc func setActionButton(button:UIButton) {
@@ -128,7 +113,7 @@ extension LeaguesVC :UITableViewDelegate, UITableViewDataSource {
         
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
-        
+       
     }
     
 }

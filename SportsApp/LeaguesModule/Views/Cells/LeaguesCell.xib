@@ -21,22 +21,25 @@
                         <rect key="frame" x="8" y="8" width="378" height="192"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DNY-EE-TC8">
-                                <rect key="frame" x="128" y="20" width="122" height="121.5"/>
+                                <rect key="frame" x="134" y="41" width="110" height="110"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DNY-EE-TC8" secondAttribute="height" multiplier="1:1" id="uvg-f3-87l"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="league Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFd-XL-RDn">
-                                <rect key="frame" x="28" y="145.5" width="322" height="26.5"/>
+                                <rect key="frame" x="28" y="155" width="322" height="21"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qvs-cM-slX">
-                                <rect key="frame" x="324" y="70" width="46" height="22"/>
+                                <rect key="frame" x="329" y="75.5" width="41" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Qvs-cM-slX" secondAttribute="height" multiplier="1:1" id="y06-Aa-JcO"/>
+                                </constraints>
                                 <state key="normal" image="arrowshape.turn.up.right.fill" catalog="system"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivb-hI-bos">
-                                <rect key="frame" x="324" y="94" width="46" height="13"/>
+                                <rect key="frame" x="329" y="118.5" width="41" height="13"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -45,18 +48,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="DNY-EE-TC8" firstAttribute="centerX" secondItem="QKc-aN-jFo" secondAttribute="centerX" id="8b6-38-xai"/>
-                            <constraint firstItem="DNY-EE-TC8" firstAttribute="height" secondItem="QKc-aN-jFo" secondAttribute="height" multiplier="0.608173" constant="4.8653846153846274" id="Agd-dl-TXp"/>
-                            <constraint firstItem="DNY-EE-TC8" firstAttribute="top" secondItem="QKc-aN-jFo" secondAttribute="top" constant="20" id="B7h-nw-cwg"/>
+                            <constraint firstItem="DNY-EE-TC8" firstAttribute="height" secondItem="QKc-aN-jFo" secondAttribute="height" multiplier="0.608173" constant="-7.134615421295166" id="Agd-dl-TXp"/>
                             <constraint firstAttribute="trailing" secondItem="Qvs-cM-slX" secondAttribute="trailing" constant="8" id="CVm-3N-kPl"/>
                             <constraint firstItem="Ivb-hI-bos" firstAttribute="centerX" secondItem="Qvs-cM-slX" secondAttribute="centerX" id="CYd-bn-jeF"/>
                             <constraint firstItem="Ivb-hI-bos" firstAttribute="top" secondItem="Qvs-cM-slX" secondAttribute="bottom" constant="2" id="Ey9-1Y-DVz"/>
                             <constraint firstItem="Ivb-hI-bos" firstAttribute="trailing" secondItem="Qvs-cM-slX" secondAttribute="trailing" id="PfE-7x-Dlu"/>
                             <constraint firstItem="HFd-XL-RDn" firstAttribute="centerX" secondItem="DNY-EE-TC8" secondAttribute="centerX" id="WcD-Dl-DkG"/>
-                            <constraint firstAttribute="bottom" secondItem="HFd-XL-RDn" secondAttribute="bottom" constant="20" id="Yb1-Ak-emd"/>
-                            <constraint firstItem="Qvs-cM-slX" firstAttribute="leading" secondItem="DNY-EE-TC8" secondAttribute="trailing" constant="74" id="c4i-nc-fSf"/>
+                            <constraint firstItem="Qvs-cM-slX" firstAttribute="height" secondItem="QKc-aN-jFo" secondAttribute="height" multiplier="0.214583" id="Yhi-7A-2Wp"/>
                             <constraint firstItem="Qvs-cM-slX" firstAttribute="centerY" secondItem="DNY-EE-TC8" secondAttribute="centerY" id="cYO-6r-T37"/>
                             <constraint firstItem="HFd-XL-RDn" firstAttribute="leading" secondItem="QKc-aN-jFo" secondAttribute="leadingMargin" constant="20" id="cx0-IM-oJK"/>
                             <constraint firstItem="HFd-XL-RDn" firstAttribute="top" secondItem="DNY-EE-TC8" secondAttribute="bottom" constant="4" id="hU5-my-A15"/>
+                            <constraint firstItem="DNY-EE-TC8" firstAttribute="centerY" secondItem="QKc-aN-jFo" secondAttribute="centerY" id="j5B-9h-Z1l"/>
                             <constraint firstItem="Ivb-hI-bos" firstAttribute="leading" secondItem="Qvs-cM-slX" secondAttribute="leading" id="jzb-ls-H53"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HFd-XL-RDn" secondAttribute="trailing" constant="20" id="oOW-Il-RfF"/>
                         </constraints>

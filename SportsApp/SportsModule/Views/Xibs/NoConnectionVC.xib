@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoConnectionVC" customModule="SportsApp" customModuleProvider="target">
+            <connections>
+                <outlet property="bgView" destination="4dY-JE-vU3" id="7d8-e6-l8S"/>
+                <outlet property="noConnectionImage" destination="Qfb-Qy-a8a" id="uxZ-lf-Z80"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4dY-JE-vU3">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rHT-rj-pKI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOb-T4-iI5" customClass="RoundedShadowView" customModule="SportsApp" customModuleProvider="target">
+                    <rect key="frame" x="40" y="170.5" width="240" height="227"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connnection!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGh-GU-9gS">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                            <color key="backgroundColor" red="0.93725222350000004" green="0.93723756069999997" blue="0.93725579979999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoInternet" translatesAutoresizingMaskIntoConstraints="NO" id="Qfb-Qy-a8a">
+                            <rect key="frame" x="0.0" y="31" width="240" height="196"/>
+                            <color key="backgroundColor" red="0.74901753660000003" green="0.74900567529999995" blue="0.74902033810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="MGh-GU-9gS" firstAttribute="leading" secondItem="HOb-T4-iI5" secondAttribute="leading" id="0rC-Dh-Hwo"/>
+                        <constraint firstAttribute="bottom" secondItem="Qfb-Qy-a8a" secondAttribute="bottom" id="21N-Ar-udr"/>
+                        <constraint firstAttribute="width" secondItem="HOb-T4-iI5" secondAttribute="height" multiplier="240:227" id="HWf-jh-feP"/>
+                        <constraint firstAttribute="trailing" secondItem="Qfb-Qy-a8a" secondAttribute="trailing" id="MbE-Fv-FUi"/>
+                        <constraint firstItem="MGh-GU-9gS" firstAttribute="top" secondItem="HOb-T4-iI5" secondAttribute="top" id="Twj-yk-VJy"/>
+                        <constraint firstItem="Qfb-Qy-a8a" firstAttribute="top" secondItem="MGh-GU-9gS" secondAttribute="bottom" constant="1" id="XkD-t8-Jtz"/>
+                        <constraint firstAttribute="trailing" secondItem="MGh-GU-9gS" secondAttribute="trailing" id="pqu-NI-Z7n"/>
+                        <constraint firstItem="Qfb-Qy-a8a" firstAttribute="leading" secondItem="HOb-T4-iI5" secondAttribute="leading" id="tXd-mA-2g6"/>
+                        <constraint firstItem="Qfb-Qy-a8a" firstAttribute="height" secondItem="HOb-T4-iI5" secondAttribute="height" multiplier="0.863436" id="uyU-4n-bvo"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRy-tT-0nI">
+                    <rect key="frame" x="16" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="jRy-tT-0nI" secondAttribute="height" multiplier="1:1" id="Hzn-nO-yvx"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="xmark" catalog="system"/>
+                    <connections>
+                        <action selector="dismissButtonClicked:" destination="-1" eventType="touchUpInside" id="S9m-6N-a0j"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Close" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MY-yc-azc">
+                    <rect key="frame" x="16" y="48" width="30" height="14.5"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="1MY-yc-azc" firstAttribute="top" secondItem="jRy-tT-0nI" secondAttribute="bottom" constant="-2" id="06V-rM-bxQ"/>
+                <constraint firstItem="1MY-yc-azc" firstAttribute="leading" secondItem="jRy-tT-0nI" secondAttribute="leading" id="4aG-tG-Vyg"/>
+                <constraint firstItem="HOb-T4-iI5" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9jT-q3-cSi"/>
+                <constraint firstItem="jRy-tT-0nI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="DBP-nQ-7ap"/>
+                <constraint firstItem="HOb-T4-iI5" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="FGk-t2-FFI"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4dY-JE-vU3" secondAttribute="bottom" id="Ghg-LA-pn2"/>
+                <constraint firstItem="jRy-tT-0nI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="J1x-6i-8fM"/>
+                <constraint firstItem="HOb-T4-iI5" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.399648" id="gir-IU-IN7"/>
+                <constraint firstItem="4dY-JE-vU3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="i1O-9R-oTd"/>
+                <constraint firstItem="1MY-yc-azc" firstAttribute="trailing" secondItem="jRy-tT-0nI" secondAttribute="trailing" id="sBZ-Th-xGy"/>
+                <constraint firstItem="jRy-tT-0nI" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.0528169" id="sxv-SL-sor"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4dY-JE-vU3" secondAttribute="trailing" id="y8B-nd-hxJ"/>
+                <constraint firstItem="4dY-JE-vU3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="zKN-r9-N8B"/>
+            </constraints>
+            <point key="canvasLocation" x="78.75" y="81.338028169014081"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="NoInternet" width="1936.5" height="1936.5"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

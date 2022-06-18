@@ -108,7 +108,7 @@ class RoundedCustomizedVisualEffectView : UIVisualEffectView{
 
     func updateMaskLayer(){
         let shapeLayer = CAShapeLayer()
-        shapeLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        shapeLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .bottomRight,.topLeft,.topRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
         self.layer.mask = shapeLayer
     }
 }

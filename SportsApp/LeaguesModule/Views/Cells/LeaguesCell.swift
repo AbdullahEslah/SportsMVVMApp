@@ -17,14 +17,17 @@ class LeaguesCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        leagueImageView.layer.borderColor = UIColor.label.cgColor
+        leagueImageView.layer.borderWidth = 1
     }
 
+
     // For Apply Responsive Rounded Corners
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        leagueImageView.layer.cornerRadius = leagueImageView.frame.width / 2
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
         
+        leagueImageView.layer.cornerRadius = leagueImageView.frame.width / 2
+        leagueImageView.clipsToBounds = true
     }
     
     func configureCell(league: Countries) {

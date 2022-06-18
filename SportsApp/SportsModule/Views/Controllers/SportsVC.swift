@@ -13,71 +13,79 @@ class SportsVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var sportsArray       = [SportResults]()
-    var reachbility       : Reachability?
+    // Arr For Getting Data
+    var sportsArray        = [SportResults]()
     
-    // Has instance from ViewModel to get logic/Func from it
+    //Arr For Searching On Data
+    var filteredSportsArr  = [SportResults]()
+    
+    // For Search
+    let searchBar          = UISearchBar()
+    
+    // For Internet Handling
+    var reachbility        : Reachability?
+    
+    // Has instance from ViewModel to Run logic/Func from it
     var viewModelInstance : SportsViewModel?
-    let vc = NoConnectionVC()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Constants.splashScreen.frame = view.bounds
+        // Add animationView as subview
+        view.addSubview(Constants.splashScreen)
+        
+        // Play the animation
+        Helper.showAnimation()
         
         collectionView.register(UINib(nibName: "SportsCell", bundle: nil), forCellWithReuseIdentifier: "SportsCell")
         collectionView.delegate   = self
         collectionView.dataSource = self
-        
+        configureSearchBar()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reachbility = try! Reachability()
+        //collectionView.reloadData()
         listSportsData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        ConnectionManager.stopNotifier()
-        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachbility)
+    fileprivate func configureSearchBar() {
         
+    let searchInstance = SearchBar()
+        searchBar.delegate = self
+        searchInstance.configureSearchBar(navigationItem: self.navigationItem,searchBar: searchBar)
     }
     
     func listSportsData() {
-     
-        // Using bindSportsToSportsView Closure From The View Model To Load API Data From There
+
         viewModelInstance = SportsViewModel()
+        self.viewModelInstance?.listSportsData()
         viewModelInstance?.bindSportsToSportsView = { [weak self] in
             DispatchQueue.main.async {
+                Helper.dismissAnimation()
                 self?.collectionView.isHidden = false
                 self?.sportsArray = self?.viewModelInstance?.sportsArray ?? []
+                self?.filteredSportsArr = (self?.sportsArray)!
                 self?.collectionView.reloadData()
             }
         }
         
-        self.viewModelInstance?.listSportsData()
-        
-        // Using bindConnectionToSportsView Closure From The ViewModel To Check Connection From There
-        viewModelInstance?.bindConnectionToSportsView = { [weak self] in
-            DispatchQueue.main.async {
-                self?.present(self!.vc, animated: true, completion: nil)
-                self?.vc.modalPresentationStyle = .fullScreen
-                self?.vc.modalTransitionStyle   = .crossDissolve
-            }
-        }
-        self.viewModelInstance?.foundInternetConnection()
     }
 }
 
 extension SportsVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sportsArray.count
+        return filteredSportsArr.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SportsCell", for: indexPath) as? SportsCell else {
             return UICollectionViewCell()
         }
-        cell.configureCell(sport: self.sportsArray[indexPath.item])
+        cell.configureCell(sport: self.filteredSportsArr[indexPath.item])
         return cell
     }
     
@@ -90,14 +98,29 @@ extension SportsVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "LeaguesStoryboard", bundle: nil)
         if let leaguesVC = storyboard.instantiateViewController(withIdentifier: "LeaguesVC") as? LeaguesVC {
-            leaguesVC.sportNameParam = sportsArray[indexPath.item].strSport
+            leaguesVC.sportNameParam = filteredSportsArr[indexPath.item].strSport
             self.navigationController?.pushViewController(leaguesVC, animated: true)
+        
         }
         
     }
- 
 }
 
-    
+extension SportsVC : UISearchBarDelegate,UISearchControllerDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+       
+        guard !searchText.isEmpty else {
+            self.filteredSportsArr    = self.sportsArray
+            collectionView.reloadData()
+            return
+        }
+        self.filteredSportsArr = self.sportsArray.filter({ sports -> Bool in
+       
+            (sports.strSport.lowercased().contains(searchText.lowercased()))
+        })
+        collectionView.reloadData()
+    }
+}
+  
 
 

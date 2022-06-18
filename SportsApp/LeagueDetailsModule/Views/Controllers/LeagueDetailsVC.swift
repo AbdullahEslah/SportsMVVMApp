@@ -17,37 +17,38 @@ class LeagueDetailsVC: UIViewController {
     
     /* Variables
      
-       Has instance from ViewModel to get (logic/Func) from it */
+       Has instance from ViewModel to Load (logic/Func) from it */
     var viewModelInstance : LeagueDetailsViewModel?
-    var viewModelInstance2: LeagueViewModel?
-    var reachbility       : Reachability?
-    let vc                = NoConnectionVC()
-    
-    var leagueIdParam     : String?
-    var leagueNameParam   : String?
-    
+   
+    // For Loading 0,1 CollectionViewSection
     var leageDetailsData  : [Events]?
-
+    
+    // For Loading 2 Team CollectionViewSection
     var leagueTeams       : [Teams]?
     
+    // Received Params From Previous Screen
+    var leagueIdParam     : String?
+    var leagueNameParam   : String?
     var youtubeParam      : String?
     var imageParam        : String?
-    
-    var arrOfIds          = [String]()
-    
+   
+    // Instance For Implementing Composotional Layout Logic
     var compostionalLayoutInstance: ComposotionalLayout!
-    let rightButton = UIButton(type: .custom)
-    
-    //Core Data
-    var appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-    var  viewContext: NSManagedObjectContext?
-    
-    var currentUser : NSManagedObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        setupCollectionView()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkLoved()
+        Helper.hudProgress()
+        listEventsData()
+    }
+    
+    fileprivate func setupCollectionView() {
         compostionalLayoutInstance = ComposotionalLayout()
         // CollectionView Cells
         collectionView.register(UINib(nibName: "EventsCell", bundle: nil), forCellWithReuseIdentifier: "EventsCell")
@@ -62,14 +63,10 @@ class LeagueDetailsVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.collectionViewLayout = compostionalLayoutInstance.createcompositionalLayout()
-        
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //ArraysManager.coreDataArray.removeAll()
+    // Checking This League Has Been Loved Or Not
+    fileprivate func checkLoved() {
         ArraysManager.coreDataArray = CoreDataManager.shared.fetchLeaguesData()
         // Color The Star
         let data = ArraysManager.coreDataArray.filter{$0.idLeague == self.leagueIdParam }
@@ -80,40 +77,43 @@ class LeagueDetailsVC: UIViewController {
             
             favoriteButton.image = UIImage(named: "filled_star")
         }
-        //print(ArraysManager.coreDataArray)
-        listEventsData()
-        reachbility = try! Reachability()
-        
-        // Core Data
-        appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        viewContext = appDelegate.persistentContainer.viewContext
-        
-        
     }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        ConnectionManager.stopNotifier()
-        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachbility)
-    }
-    
-    
     
     func listEventsData() {
-    
+        
         // Using bindSportsToSportsView Closure From The View Model To Load API Data From There
         viewModelInstance = LeagueDetailsViewModel()
         
+        //  Data From APIs
+        self.viewModelInstance?.listLeaguesData(leagueId: leagueIdParam ?? "")
+        self.viewModelInstance?.listLeaguesTeam(leagueName: leagueNameParam ?? "")
+        
+        // Do Some Action After Loading upcomingEvents, LatestResults 0,1 Sections
         viewModelInstance?.bindLeagueDetailsToDetailsView = { [weak self] in
             DispatchQueue.main.async {
+                Helper.dismissHud()
                 self?.collectionView.isHidden = false
                 self?.leageDetailsData = self?.viewModelInstance?.leagueDetailsArray ?? []
                 self?.collectionView.reloadData()
             }
         }
         
+        // Do Some Action After Loading Teams 2'nd Section
+        viewModelInstance?.bindTeamsToDetailsView = { [weak self] in
+            DispatchQueue.main.async {
+                Helper.dismissHud()
+                self?.collectionView.isHidden = false
+                self?.leagueTeams = self?.viewModelInstance?.teamsArray ?? []
+                self?.collectionView.reloadData()
+            }
+        }
+        
+        // To Stop Animation If Failed To Load Data For Any Reason
+        viewModelInstance?.bindFailedToLoadData = {[weak self] in
+            Helper.dismissHud()
+        }
+        
+        // Reloading Placeholders From CollectionViews Cells
         viewModelInstance?.bindEventsPlaceholderToDetailsView = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
@@ -126,72 +126,8 @@ class LeagueDetailsVC: UIViewController {
             }
         }
         
-        viewModelInstance?.bindTeamsToDetailsView = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.isHidden = false
-                self?.leagueTeams = self?.viewModelInstance?.teamsArray ?? []
-                self?.collectionView.reloadData()
-            }
-        }
-        
-        self.viewModelInstance?.listLeaguesData(leagueId: leagueIdParam ?? "")
-        self.viewModelInstance?.listLeaguesTeam(leagueName: leagueNameParam ?? "")
-        
-        viewModelInstance?.bindConnectionToDetailsView = { [weak self] in
-            DispatchQueue.main.async {
-                self?.present(self!.vc, animated: true, completion: nil)
-                self?.vc.modalPresentationStyle = .fullScreen
-                self?.vc.modalTransitionStyle   = .crossDissolve
-            }
-        }
-        self.viewModelInstance?.foundInternetConnection()
     }
-    
-//    func checkexisstence() {
-//
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: CoreDataManager.shared.entityName!)
-//
-//    DispatchQueue.global(qos: .default).async {
-//        do {
-//
-//            let leagues = try self.viewContext?.fetch(fetchRequest)
-//
-//            for leagueID in leagues ?? [] {
-//
-//                let value = leagueID.value(forKey: "idLeague") as? String ?? ""
-//
-//                self.arrOfIds.append(value)
-//
-//           }
-////            print(arrOfIds)
-//            for id in self.arrOfIds {
-//                print(id)
-////                print(self.leagueNameParam)
-//                if id == self.leagueIdParam {
-//                    DispatchQueue.main.async{
-//                    print("found in core data")
-//                    Helper.displayMessage(message: "You Can't Add Existing League To Favorites Multiple Times", messageError: true)
-//                    }
-//                   // favoriteButton.image = UIImage(named: "filled_star")
-//                } else {
-//
-//                    DispatchQueue.main.async{
-//                        print("not found in core data")
-//                        Helper.displayMessage(message: "Added League To Favorites Successfully", messageError: false)
-//                        self.favoriteButton.image = UIImage(named: "filled_star")
-//                        self.favoriteButton.tintColor = UIColor.red
-//                        self.viewModelInstance?.saveLocalData(strLeague: self.leagueNameParam, strBadge: self.imageParam, strYoutube: self.youtubeParam, idLeague: self.leagueIdParam)
-//                    }
-//                }
-//            }
-//                } catch let error {
-//
-//                    print(error.localizedDescription)
-//
-//                }
-//    }
-//        }
-//
+
     @IBAction func addToFavorite(_ sender: Any) {
   
         let finalArray = CoreDataManager.shared.fetchLeaguesData()
@@ -207,13 +143,11 @@ class LeagueDetailsVC: UIViewController {
             viewModelInstance?.saveLocalData(strLeague: leagueNameParam, strBadge: imageParam, strYoutube: youtubeParam, idLeague: leagueIdParam)
         }
 
-        
     }
     
     @IBAction func dismissButtonClicked(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    
     
 }
 
@@ -252,7 +186,7 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
                 return UICollectionReusableView()
             }
             
-            firstView.headerLabel.text =  "UpComing Events"
+            firstView.headerLabel.text =  "Upcoming Events"
             return firstView
         
         case 1:
@@ -260,7 +194,7 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
                 return UICollectionReusableView()
             }
             
-            secondView.headerLabel.text =  "Teams Results"
+            secondView.headerLabel.text =  "Latest Results"
             secondView.headerLabel.textAlignment = .left
             return secondView
             
@@ -286,7 +220,7 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
         switch indexPath.section {
         
         case 0:
-            
+                
             guard let firstCell = collectionView.dequeueReusableCell(withReuseIdentifier: "EventsCell", for: indexPath) as? EventsCell else {
                 return UICollectionViewCell()
             }
@@ -300,7 +234,7 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
             guard let secondCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacingTeamsCell", for: indexPath) as? FacingTeamsCell else {
                 return UICollectionViewCell()
             }
-                
+            
             secondCell.configureCell(teamData: self.leageDetailsData?[indexPath.row])
             return secondCell
             
@@ -321,6 +255,8 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
         let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
         guard let vc         = storyboard.instantiateViewController(withIdentifier:"TeamDetailsVC") as? TeamDetailsVC else {return}
         
@@ -330,8 +266,8 @@ extension LeagueDetailsVC : UICollectionViewDelegate,UICollectionViewDataSource 
         vc.modalPresentationStyle = .fullScreen
         
         self.present(vc, animated: true)
+        default:
+            print("error")
+        }
     }
-    
-    
-    
 }

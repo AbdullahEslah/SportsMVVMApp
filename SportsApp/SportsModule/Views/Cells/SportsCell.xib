@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="188" height="220"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQH-dF-wqj">
+                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQH-dF-wqj" customClass="RoundedCustomizedVisualEffectView" customModule="SportsApp" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="172" height="204"/>
                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ANi-Ig-6Gp">
                             <rect key="frame" x="0.0" y="0.0" width="172" height="204"/>
@@ -32,7 +32,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="172" height="146"/>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="S5C-tg-cGS" secondAttribute="trailing" constant="8" id="4TH-4O-Kcz"/>
                                 <constraint firstItem="XBW-lT-COK" firstAttribute="leading" secondItem="ANi-Ig-6Gp" secondAttribute="leading" id="EsQ-aB-yDt"/>
@@ -66,6 +67,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

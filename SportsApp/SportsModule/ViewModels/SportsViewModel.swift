@@ -16,16 +16,14 @@ class SportsViewModel {
     // To Connect View With ViewModel Using Closures For Connection
     var bindConnectionToSportsView:(() -> ()) = {}
     
-    var bindTabBar: (() -> ()) = {}
-    
-    
     var bindFavToFavView: ( () -> () ) = {}
     
-    let conncetion = ConnectionManager.sharedInstance
+    let conncetion       = ConnectionManager.sharedInstance
     
     var bindFavConnection: ( () -> () ) = {}
+    
     //Any Changes/action Happends In sportsArray call The Closure
-    var sportsArray : [SportResults]!
+    var sportsArray : [SportResults]?
     {
         didSet{
             // Call The Closure Once SportResults changed instead of putting it down inside the func to observe the change here
@@ -34,12 +32,11 @@ class SportsViewModel {
     }
     
     func colorTheTabBarText() {
+        
          //color of text under icon in tabbar controller
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.gray], for: UIControl.State())
 
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor :UIColor.label], for: .selected)
-
-        self.bindTabBar()
       
     }
     
@@ -50,39 +47,40 @@ class SportsViewModel {
             if error == nil {
                 
                 self?.sportsArray = sports
-                // Helper.displayMessage(message: err.localizedDescription, messageError: Fa)
+                
             } else {
                 guard let err = error else {return}
-                
-                Helper.displayMessage(message: err.localizedDescription, messageError: true)
+                print(err)
             }
         }
     }
     
     
     
-    func foundInternetConnection() {
+    // Favorites Logic
+    func noInternetConnection() {
         
         conncetion.reachability.whenUnreachable = { reachability in
             
-            Helper.displayMessage(message: "No Internet Connection !", messageError: true)
-            self.bindConnectionToSportsView()
-            
-            
-            if reachability.connection == .wifi || reachability.connection == .cellular {
-                
-                Helper.displayMessage(message: "Found Internet Connection ✅", messageError: false)
-            }
+            Helper.displayMessage(message: "You Can't Go To Details Of This View Until Reconnects To The Internet!", messageError: true)
         }
+    }
+    
+    func foundInternetConnection() {
+        conncetion.reachability.whenUnreachable = { reachability in
+            
+            self.bindConnectionToSportsView()
+        }
+        
     }
     
     func internetConnection() {
         
         conncetion.reachability.whenReachable = { reachability in
-            
+            Helper.displayMessage(message: "Has Internet ✅", messageError: false)
             self.bindFavConnection()
             
         }
     }
-    
+
 }

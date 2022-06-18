@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftMessages
+import ProgressHUD
 
 class Helper {
     
@@ -35,5 +36,44 @@ class Helper {
        }
     }
     
+    static func hudProgress() {
+        ProgressHUD.show("Loading...")
+        ProgressHUD.animationType   = .circleSpinFade
+        ProgressHUD.colorAnimation  = CustomColors.MainColor
+        ProgressHUD.colorHUD        = .label
+    }
+    
+    static func dismissHud() {
+        ProgressHUD.dismiss()
+    }
+    
+    static func dismissAnimation() {
+        Constants.splashScreen.stop()
+        Constants.splashScreen.alpha = 0
+    }
+    
+    static func showAnimation() {
+        Constants.splashScreen.play()
+        Constants.splashScreen.loopMode = .loop
+        Constants.splashScreen.animationSpeed = 1
+    }
 }
+    
+    extension UIViewController {
+        class func pushVC(storyboardName:String,vcIdentifier:String,nav:UINavigationController) {
+            
+            let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: vcIdentifier)
+            nav.pushViewController(vc, animated: true)
+        }
+        
+        func presentVC(storyboardName:String,VCidentifier:String) {
+            let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+            let vc         = storyboard.instantiateViewController(withIdentifier: VCidentifier)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
+    
+
 

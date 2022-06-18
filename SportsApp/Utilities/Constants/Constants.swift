@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Lottie
 
 class Constants {
     
     static var sectionHeaderElementKind = "header"
-    
+    static var splashScreen = AnimationView(animation: Animation.named("splashScreen"))
 }

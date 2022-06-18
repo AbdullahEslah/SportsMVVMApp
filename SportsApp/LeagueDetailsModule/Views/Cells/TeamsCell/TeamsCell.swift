@@ -23,15 +23,18 @@ class TeamsCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+       
     }
     
     // For Apply Responsive Rounded Corners
     override func layoutSubviews() {
         super.layoutSubviews()
         teamImageView.layer.cornerRadius = teamImageView.frame.width / 2
-        
+        teamImageView.clipsToBounds = true
+        teamImageView.layer.borderColor = UIColor.label.cgColor
+        teamImageView.layer.borderWidth = 1
     }
-    
+      
     func configureCell(leagueDetails: Teams?) {
         if leagueDetails?.strTeamBadge == nil {
             self.teamImageView.isHidden = true
