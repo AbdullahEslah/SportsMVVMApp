@@ -98,8 +98,5 @@ class LeagueDetailsViewModel {
             
     }
     
-    func foundInternetAfterLost() {
-        
-    }
-    
+   
 }

@@ -14,9 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    let conncetion = ConnectionManager.sharedInstance
-    var reachbility       : Reachability?
-     let controller =  NoConnectionVC()
+    let conncetion  = ConnectionManager.sharedInstance
+    var reachbility : Reachability?
+    let controller =  NoConnectionVC()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         

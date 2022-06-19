@@ -421,6 +421,7 @@
 		FA9093F82856A5D50058FF91 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FAFD8D322858155E00AC35B8 /* ComposotionalLayout */,
 				FA9094262856C8380058FF91 /* Headers */,
 				FA9094092856B3900058FF91 /* Controllers */,
 				FA9094132856B4D60058FF91 /* Cells */,
@@ -439,7 +440,6 @@
 		FA9093FA2856A6080058FF91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FAFD8D322858155E00AC35B8 /* ComposotionalLayout */,
 				FA9094012856B13E0058FF91 /* LeageDetails */,
 				FA9094022856B1940058FF91 /* Teams */,
 			);

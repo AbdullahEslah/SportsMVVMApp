@@ -105,6 +105,7 @@ extension FavoritesVC :UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         monitor.pathUpdateHandler = { path in
+            
             if path.status == .satisfied {
                 
                 DispatchQueue.main.async {
